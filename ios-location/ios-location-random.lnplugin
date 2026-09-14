@@ -1,0 +1,12 @@
+#!name=打卡定位
+#!desc=单中心点 · 200 米圆形随机 · 每次启动随机一次 · 30 分钟有效 · 每 5 分钟检查自动恢复
+#!homepage=https://github.com/wenjinliuu/loon-plugins
+
+[Script]
+http-request ^http:\/\/example\.com\/__(?:stash|loon)_location\/(?:start|real|status)(?:\?.*)?$ script-path=https://raw.githubusercontent.com/wenjinliuu/loon-plugins/main/ios-location/ios-location-control.js, requires-body=false, timeout=5, tag=定位快捷指令
+cron "*/5 * * * *" script-path=https://raw.githubusercontent.com/wenjinliuu/loon-plugins/main/ios-location/ios-location-control.js, timeout=5, tag=定位到期检查
+http-request ^https?:\/\/(?:gs-loc(?:-cn)?\.apple\.com|gsp-ssl\.ls\.apple\.com|bluedot\.is\.autonavi\.com(?:\.gds\.alibabadns\.com)?)\/clls\/wloc(?:\?.*)?$ script-path=https://raw.githubusercontent.com/mekos2772/ios-location-spoofer/main/location-spoofer.js, requires-body=false, timeout=5, tag=定位请求预处理, argument=debug=false
+http-response ^https?:\/\/(?:gs-loc(?:-cn)?\.apple\.com|gsp-ssl\.ls\.apple\.com|bluedot\.is\.autonavi\.com(?:\.gds\.alibabadns\.com)?)\/clls\/wloc(?:\?.*)?$ script-path=https://raw.githubusercontent.com/mekos2772/ios-location-spoofer/main/location-spoofer.js, requires-body=true, binary-body-mode=true, timeout=30, tag=iOS 定位修改, argument=mode=response&horizontalAccuracy=39&debug=false
+
+[MITM]
+hostname = gs-loc.apple.com, gs-loc-cn.apple.com, gsp-ssl.ls.apple.com, bluedot.is.autonavi.com, bluedot.is.autonavi.com.gds.alibabadns.com
