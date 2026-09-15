@@ -3,7 +3,7 @@
 #!homepage=https://github.com/wenjinliuu/loon-plugins
 
 [Script]
-http-request ^http://example\\.com/__stash_location/(start|real|status) script-path=https://raw.githubusercontent.com/wenjinliuu/loon-plugins/main/ios-location/ios-location-control.js?v=20260915, requires-body=false, timeout=5, tag=定位快捷指令\nhttp-request ^http://example\\.com/__loon_location/(start|real|status) script-path=https://raw.githubusercontent.com/wenjinliuu/loon-plugins/main/ios-location/ios-location-control.js?v=20260915, requires-body=false, timeout=5, tag=定位快捷指令（Loon）
+http-request ^http:\/\/example\.com\/__(?:stash|loon)_location\/(?:start|real|status)(?:\?.*)?$ script-path=https://raw.githubusercontent.com/wenjinliuu/loon-plugins/main/ios-location/ios-location-control.js, requires-body=false, timeout=5, tag=定位快捷指令
 cron "*/5 * * * *" script-path=https://raw.githubusercontent.com/wenjinliuu/loon-plugins/main/ios-location/ios-location-control.js, timeout=5, tag=定位到期检查
 http-request ^https?:\/\/(?:gs-loc(?:-cn)?\.apple\.com|gsp-ssl\.ls\.apple\.com|bluedot\.is\.autonavi\.com(?:\.gds\.alibabadns\.com)?)\/clls\/wloc(?:\?.*)?$ script-path=https://raw.githubusercontent.com/mekos2772/ios-location-spoofer/main/location-spoofer.js, requires-body=false, timeout=5, tag=定位请求预处理, argument=debug=false
 http-response ^https?:\/\/(?:gs-loc(?:-cn)?\.apple\.com|gsp-ssl\.ls\.apple\.com|bluedot\.is\.autonavi\.com(?:\.gds\.alibabadns\.com)?)\/clls\/wloc(?:\?.*)?$ script-path=https://raw.githubusercontent.com/mekos2772/ios-location-spoofer/main/location-spoofer.js, requires-body=true, binary-body-mode=true, timeout=30, tag=iOS 定位修改, argument=mode=response&horizontalAccuracy=39&debug=false
